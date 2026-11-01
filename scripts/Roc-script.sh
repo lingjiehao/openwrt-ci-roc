@@ -191,6 +191,21 @@ if package_enabled ariang; then
   mv package/ariang feeds/packages/net/ariang
 fi
 
+### 自定义文件 (files/ 目录) ###
+# 顶层 files/ 会在生成 rootfs 时被复制进固件（include/image.mk 的 prepare_rootfs），
+# 用于注入 uci-defaults 等文件，避免修改第三方 feed 包。
+if [ -d "$WORKSPACE/files" ]; then
+  mkdir -p files
+  cp -a "$WORKSPACE/files/." files/
+  if [ -d files/etc/uci-defaults ]; then
+    chmod 0755 files/etc/uci-defaults/* 2>/dev/null || true
+  fi
+fi
+
+### 内网测速 (librespeed-go) ###
+# 默认启用由 files/etc/uci-defaults/99-librespeed-go 完成（首次启动写入 enabled=1）。
+# 内网设备浏览器访问 http://<路由IP>:8989 即可测设备到路由器的吞吐。
+
 if package_enabled nginx nginx-full nginx-ssl luci-app-nginx; then
   rm -rf feeds/packages/net/nginx
   git_sparse_clone nginx https://github.com/laipeng668/packages net/nginx

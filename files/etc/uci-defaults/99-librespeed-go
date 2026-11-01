@@ -1,0 +1,16 @@
+#!/bin/sh
+# 首次启动启用内网测速服务 (LibreSpeed Go)。
+# 内网设备浏览器访问 http://<路由IP>:8989 即可测试设备到路由器的吞吐。
+# 本脚本由 /etc/init.d/boot 在首次启动时执行，成功后会被自动删除。
+
+[ -f /etc/config/librespeed-go ] || exit 0
+
+[ "$(uci -q get librespeed-go.config.enabled)" = "1" ] || {
+	uci set librespeed-go.config.enabled='1'
+	uci commit librespeed-go
+}
+
+/etc/init.d/librespeed-go enable
+/etc/init.d/librespeed-go restart >/dev/null 2>&1
+
+exit 0

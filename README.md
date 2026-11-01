@@ -9,6 +9,7 @@
 
 ## 项目说明
 - 默认管理地址：**`192.168.30.1`**，默认用户：**`root`**，默认密码：**`none`**
+- 内网测速：太乙 RE-CS-07 固件内置 `librespeed-go`，默认启用。内网设备（手机/电脑）浏览器打开 `http://192.168.30.1:8989` 即可测该设备到路由器的实际吞吐，无需安装客户端；服务的启停与开机自启在 LuCI「系统 → 启动项」里管理（服务名 `librespeed-go`）。
 - [云编译来源](https://github.com/haiibo/OpenWrt) [视频教程](https://www.youtube.com/watch?v=6j4ofS0GT38) [问题合集](https://github.com/LiBwrt/openwrt-6.x/issues)
 
 ## 仓库说明
